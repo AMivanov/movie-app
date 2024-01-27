@@ -1,0 +1,124 @@
+
+.film-card {
+    box-shadow:
+        inset 0 0 1em rgba(0, 0, 0, 0.1),
+        0 0 0 0 rgb(255, 255, 255),
+        0.3em 0.3em 1em rgba(0, 0, 0, 0.3);
+    width: 454px;
+    height: 281px;
+    display: flex;
+    flex-shrink: 0;
+    margin-bottom: 36px;
+    position: relative;
+}
+
+.film-card_img {
+    width: 183px;
+    height: 100%;
+    margin-right: 20px;
+}
+
+.film-info {
+    display: flex;
+    flex-direction: column;
+    padding-top: 12px;
+    padding-right: 9px;
+}
+
+.film-name {
+    font-family: "Inter UI", sans-serif;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 28px;
+    text-align: left;
+    margin-top: 0;
+    margin-bottom: 7px;
+    width: 210px;
+}
+
+.film-date {
+    color: #827E7E;
+    font-family: "Inter UI", sans-serif;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 22px;
+    text-align: left;
+    margin-top: 0;
+    margin-bottom: 4px;
+}
+
+.film-genre {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 7px;
+    padding: 0;
+}
+
+.film-genre_container {
+    /*display: inline-block;*/
+    color: rgba(0, 0, 0, 0.65);
+    font-family: "Inter UI", sans-serif;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 46px;
+    height: 20px;
+    border-radius: 2px;
+    border: 1px solid #D9D9D9;
+    background: #FAFAFA;
+    margin-right: 8px;
+    margin-bottom: 8px;
+}
+
+.film-description {
+    font-family: "Inter UI", sans-serif;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 22px;
+    width: 228px;
+    height: 129px;
+    text-align: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 6;
+    -webkit-box-orient: vertical;
+    margin: 0;
+}
+
+.film-rate {
+    width: 239px;
+    height: 46px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 0;
+    margin-top: auto;
+}
+
+.film-rating {
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    top: 12px;
+    right: 9px;
+    font-family: "Inter UI", sans-serif;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 22px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.film-rating_color {
+    border: 2px solid #E9D100;
+    border-radius: 50% 50%;
+}

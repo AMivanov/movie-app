@@ -1,0 +1,14 @@
+html,
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    margin: 0 auto;
+    padding: 13px 33px;
+    text-align: center;
+    max-width: 1010px;
+    min-height: 1147px;
+    background: white;
+}
