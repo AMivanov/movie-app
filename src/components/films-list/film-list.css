@@ -8,3 +8,9 @@
     justify-content: space-between;
     align-items: flex-start;
 }
+
+.not-result_search {
+    font-family: "Inter UI", sans-serif;
+    margin: 20px auto;
+    color: midnightblue;
+}

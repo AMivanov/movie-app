@@ -63,6 +63,7 @@
     "react/jsx-indent": "off",
     "camelcase": "off",
     "react/no-array-index-key": "off",
+    "array-callback-return": "off",
     "import/order": [
       2,
       {
