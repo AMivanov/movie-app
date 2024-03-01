@@ -123,7 +123,22 @@
     align-items: center;
 }
 
-.film-rating_color {
+.film-rating_color-red {
+    border: 2px solid #E90000;
+    border-radius: 50% 50%;
+}
+
+.film-rating_color-orange {
+    border: 2px solid #E97E00;
+    border-radius: 50% 50%;
+}
+
+.film-rating_color-yellow {
     border: 2px solid #E9D100;
+    border-radius: 50% 50%;
+}
+
+.film-rating_color-green {
+    border: 2px solid #66E900;
     border-radius: 50% 50%;
 }

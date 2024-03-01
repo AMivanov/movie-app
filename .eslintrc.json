@@ -64,6 +64,7 @@
     "camelcase": "off",
     "react/no-array-index-key": "off",
     "array-callback-return": "off",
+    "arrow-body-style": "off",
     "import/order": [
       2,
       {
