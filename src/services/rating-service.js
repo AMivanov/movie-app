@@ -16,7 +16,7 @@ const AddRating = async (movie_id, rating, guestSessionId) => {
     }
 }
 
-const GetRating = async (guestSessionId, page) => {
+const GetRating = async (guestSessionId, page = 1) => {
     const response = await fetch(`https://api.themoviedb.org/3/guest_session/${guestSessionId}/rated/movies?api_key=8e57927baec4f3a6ef70ae7224484da7&language=en-US&page=${page}&sort_by=created_at.asc`)
     if (!response.ok) {
         throw new Error(`NOT FETCH ${response.status}`)

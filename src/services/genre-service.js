@@ -4,6 +4,9 @@ const GenreService = async () => {
         throw new Error(`NOT FETCH Genres ${response.status}`)
     }
     const jsonRes = await response.json();
+    if (!jsonRes || !jsonRes.genres) {
+        throw new Error('Invalid response from server');
+    }
     const genresObj = {};
     jsonRes.genres.map((elem) => {
         genresObj[elem.id] = elem.name;

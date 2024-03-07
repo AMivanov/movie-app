@@ -21,38 +21,77 @@ export default class Film extends React.Component {
     // }
 
     handleClickRate = (e) => {
+        const { id, guestSessionId, ...filmData } = this.props
         this.setState({
             valueRate: e,
-        })
-        AddRating(this.props.id, e, this.props.guestSessionId)
-        // AddRating('222', this.state.valueRate)
+        });
+        AddRating(id, e, guestSessionId)
+        const ratings = JSON.parse(localStorage.getItem('filmRatings')) || {}
+        // console.log(localStorage)
+        ratings[id] = e
+        localStorage.setItem('filmRatings', JSON.stringify(ratings))
+        const allFilmData = { id, ...filmData, valueRate: e }
+        console.log(allFilmData)
+        localStorage.setItem(`film-${id}`, JSON.stringify(allFilmData));
     }
 
-    componentDidUpdate(prevProps, prevState) {
-        if (this.state.valueRate !== prevState && this.state.valueRate !== 0 && prevState !== 0) {
-            AddRating(this.props.id, this.state.valueRate, this.props.guestSessionId)
+    componentDidMount() {
+        const { id } = this.props;
+        const ratings = JSON.parse(localStorage.getItem('filmRatings')) || {};
+        const ratedRating = ratings[id];
+        if (ratedRating) {
+            this.setState({ valueRate: ratedRating });
         }
-        // console.log(this.state.valueRate)
+        const allFilmData = JSON.parse(localStorage.getItem(`film-${id}`));
+        if (allFilmData) {
+            this.setState({ valueRate: allFilmData.valueRate || 0 });
+        }
     }
+
+    // handleClickRate = (e) => {
+    //     const { id, guestSessionId, ...filmData } = this.props;
+    //     this.setState({
+    //         valueRate: e,
+    //     });
+    //     const allFilmData = { id, ...filmData, valueRate: e }
+    //     console.log(allFilmData)
+    //     localStorage.setItem(`film-${id}`, JSON.stringify(allFilmData));
+    //     AddRating(id, e, guestSessionId)
+    // };
+    //
+    // componentDidMount() {
+    //     const { id } = this.props;
+    //     // Получаем полный объект фильма из localStorage
+    //     const allFilmData = JSON.parse(localStorage.getItem(`film-${id}`));
+    //     if (allFilmData) {
+    //         this.setState({ valueRate: allFilmData.valueRate || 0 });
+    //     }
+    // }
+
+    // handleClickRate = (e) => {
+    //     this.setState({
+    //         valueRate: e,
+    //     })
+    //     AddRating(this.props.id, e, this.props.guestSessionId)
+    //     // AddRating('222', this.state.valueRate)
+    // }
+
+    // componentDidUpdate(prevProps, prevState) {
+    //     if (this.state.valueRate !== prevState && this.state.valueRate !== 0 && prevState !== 0) {
+    //         AddRating(this.props.id, this.state.valueRate, this.props.guestSessionId)
+    //     }
+    //     // console.log(this.state.valueRate)
+    // }
 
     render() {
         // console.log(this.props.img)
-        const { img, name, date, id, genres, description, rating, ratedFilms } = this.props
+        const { img, name, date, genres, description, rating } = this.props
+        // console.log(this.props)
         const formatDate = date ? format(parseISO(date), 'MMMM d, y') : ''
         if (rating >= 0 && rating < 3) this.classNameRating += ' film-rating_color-red'
         if (rating >= 3 && rating < 5) this.classNameRating += ' film-rating_color-orange'
         if (rating >= 5 && rating < 7) this.classNameRating += ' film-rating_color-yellow'
         if (rating >= 7) this.classNameRating += ' film-rating_color-green'
-        const stars = 0
-        if (ratedFilms.length !== 0) {
-            ratedFilms.forEach((el) => {
-                if (id === el.id) {
-                    this.state.valueRate = el.rating
-                    console.log(stars)
-                }
-            })
-        }
-        // console.log(ratedFilms)
         return (
             <GenreServiceConsumer>
                 {
@@ -87,9 +126,7 @@ export default class Film extends React.Component {
                                           count={10}
                                           allowHalf
                                           style={{ fontSize: 16 }}
-                                          // value={this.state.valueRate}
                                           defaultValue={this.state.valueRate}
-                                          // value={stars}
                                           onChange={this.handleClickRate}
                                         />
                                     </div>

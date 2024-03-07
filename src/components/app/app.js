@@ -19,6 +19,7 @@ export default class App extends React.Component {
         currentPage: 1,
         totalPages: 0,
         guestSessionId: '',
+        genresObj: {},
     }
 
     componentDidMount() {
