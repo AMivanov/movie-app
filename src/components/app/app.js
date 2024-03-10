@@ -37,7 +37,6 @@ export default class App extends React.Component {
             loading: true,
         }, () => {
             MovieService(this.state.searchTerm, this.state.currentPage).then((res) => {
-                // console.log(res)
                 this.setState({
                     film: res.results,
                     totalPages: res.total_pages,
@@ -51,21 +50,19 @@ export default class App extends React.Component {
        this.setState({
            loading: true,
        })
-       const debSearch = debounce(() => this.searchFilms(e.target.value), 400);
-       debSearch();
+       const debSearch = debounce(() => this.searchFilms(e.target.value), 400)
+       debSearch()
    }
 
     handlePageChange = (page) => {
         this.setState({
             currentPage: page,
         });
-        this.searchFilms(this.state.searchTerm);
-    };
+        this.searchFilms(this.state.searchTerm)
+    }
 
     render() {
-        // console.log(this.state.film)
         const { film, loading, currentPage, totalPages, searchTerm, genresObj, guestSessionId } = this.state
-        // console.log(genresObj)
         return (
             <GenreServiceProvider value={genresObj}>
             <>

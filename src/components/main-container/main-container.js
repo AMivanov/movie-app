@@ -9,7 +9,6 @@ import './main-container.css'
 export default class MainContainer extends React.Component {
     render() {
         const { film, loading, currentPage, totalPages, searchTerm, searchFilms, guestSessionId, handleSearch, handlePageChange, tabKey } = this.props
-        // console.log('f', film)
         return (
         <>
             {tabKey === '1' && <SearchForm searchFilms={searchFilms} handleSearch={handleSearch} />}
@@ -17,7 +16,6 @@ export default class MainContainer extends React.Component {
                 <>
                     <FilmList
                       film={film}
-                      // loading={loading}
                       searchTerm={searchTerm}
                       guestSessionId={guestSessionId}
                       handlePageChange={handlePageChange}
