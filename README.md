@@ -1,1 +1,3 @@
-Vercel - https://movieapp-gkamuzqbb-alexeys-projects-f1731c68.vercel.app/
+Vercel - https://movieapp-nu-kohl.vercel.app/
+Бывает отрабатывает не стабильно.
+При изменении рейтинга, он подгружается, только когда -> изменить рейтинг, поменять вкладку на <Rated> вернуться на вкладку <Search> и изменить страницу в <Pagination> на любую и вернуться опять на ту страницу где изменили рейтинг
