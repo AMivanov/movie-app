@@ -8,7 +8,7 @@ import { GenreServiceConsumer } from '../genre-service-context';
 import './film.css';
 
 export default class Film extends React.Component {
-    classNameRating;
+    classNameRating
 
     constructor(props) {
         super(props);
@@ -18,28 +18,15 @@ export default class Film extends React.Component {
     }
 
     handleClickRate = (e) => {
-        const { id, guestSessionId, ...filmData } = this.props
         this.setState({
             valueRate: e,
-        });
-        AddRating(id, e, guestSessionId)
-        const ratings = JSON.parse(localStorage.getItem('filmRatings')) || {}
-        ratings[id] = e
-        localStorage.setItem('filmRatings', JSON.stringify(ratings))
-        const allFilmData = { id, ...filmData, valueRate: e }
-        localStorage.setItem(`film-${id}`, JSON.stringify(allFilmData));
+        })
+        AddRating(this.props.id, e, this.props.guestSessionId)
     }
 
-    componentDidMount() {
-        const { id } = this.props;
-        const ratings = JSON.parse(localStorage.getItem('filmRatings')) || {};
-        const ratedRating = ratings[id];
-        if (ratedRating) {
-            this.setState({ valueRate: ratedRating });
-        }
-        const allFilmData = JSON.parse(localStorage.getItem(`film-${id}`));
-        if (allFilmData) {
-            this.setState({ valueRate: allFilmData.valueRate || 0 });
+    componentDidUpdate(prevProps, prevState) {
+        if (this.state.valueRate !== prevState && this.state.valueRate !== 0 && prevState !== 0) {
+            AddRating(this.props.id, this.state.valueRate, this.props.guestSessionId)
         }
     }
 

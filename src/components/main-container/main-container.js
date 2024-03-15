@@ -8,17 +8,20 @@ import './main-container.css'
 
 export default class MainContainer extends React.Component {
     render() {
-        const { film, loading, currentPage, totalPages, searchTerm, searchFilms, guestSessionId, handleSearch, handlePageChange, tabKey } = this.props
+        const { film, loading, currentPage,
+            totalPages, searchTerm, searchFilms,
+            guestSessionId, handleSearch, handlePageChange,
+            tabKey, ratedFilms } = this.props
         return (
         <>
-            {tabKey === '1' && <SearchForm searchFilms={searchFilms} handleSearch={handleSearch} />}
+            {tabKey === '1' && <SearchForm searchFilms={searchFilms} handleSearch={handleSearch} /> }
             {loading ? (<Spin size="large" style={{ margin: '200px 0 0 0' }} />) : (
                 <>
                     <FilmList
                       film={film}
                       searchTerm={searchTerm}
                       guestSessionId={guestSessionId}
-                      handlePageChange={handlePageChange}
+                      ratedFilms={ratedFilms}
                       tabKey={tabKey}
                     />
                     {totalPages > 1 && (

@@ -8,44 +8,46 @@ import './film-list.css'
 export default class FilmList extends React.Component {
     static defaultProps = {
         film: [],
+        ratedFilms: [],
+    }
+
+    replaceFilmWithRated = (film, ratedFilms, tabKey) => {
+        if (tabKey === '2') {
+            return ratedFilms
+        } if (ratedFilms.length === 0) {
+            return film
+        }
+            return film.map((elem) => {
+                const ratedFilm = ratedFilms.find((ratedElem) => ratedElem.id === elem.id)
+                return ratedFilm || elem
+            })
     }
 
     render() {
-        const { film, searchTerm, guestSessionId, tabKey } = this.props
+        const { film, searchTerm, guestSessionId, tabKey, ratedFilms } = this.props
+        const updatedFilmList = this.replaceFilmWithRated(film, ratedFilms, tabKey)
         let elements = []
-        if (!searchTerm && film.length === 0 && tabKey === '1') {
+        if (!searchTerm && updatedFilmList.length === 0 && tabKey === '1') {
             elements = <p className="not-result_search">Введите название фильма</p>
-        } else if (searchTerm && film.length === 0 && tabKey === '1') {
+        } else if (searchTerm && updatedFilmList.length === 0 && tabKey === '1') {
             elements = <p className="not-result_search">Поиск не дал результатов</p>
-        } else if (tabKey === '2' && film.length === 0) {
+        } else if (tabKey === '2' && updatedFilmList.length === 0) {
             elements = <p className="not-result_search">В избранном пока что отсутвует список фильмов</p>
         } else {
-            elements = film.map((elem) => {
-                const imgField = tabKey === '1' ? 'poster_path' : 'img'
-                const nameField = tabKey === '1' ? 'original_title' : 'name'
-                const dateField = tabKey === '1' ? 'release_date' : 'date'
-                const genresField = tabKey === '1' ? 'genre_ids' : 'genres'
-                const descriptionField = tabKey === '1' ? 'overview' : 'description'
-                const rating = tabKey === '1' ? 'vote_average' : 'rating'
-                const ratedRating = JSON.parse(localStorage.getItem('filmRatings'))?.[elem.id] || 0
-                let poster
-                if (tabKey === '1') {
-                    poster = elem[imgField] ? `https://image.tmdb.org/t/p/w500${elem[imgField]}` : defaultPoster
-                } else {
-                    poster = elem[imgField] ? elem[imgField] : defaultPoster
-                }
+            elements = updatedFilmList.map((elem) => {
+               const poster = elem.poster_path ? `https://image.tmdb.org/t/p/w500${elem.poster_path}` : defaultPoster
                     return (
                         <li key={elem.id}>
                             <Film
                               guestSessionId={guestSessionId}
                               id={elem.id}
                               img={poster}
-                              name={elem[nameField]}
-                              date={elem[dateField]}
-                              genres={elem[genresField]}
-                              description={elem[descriptionField]}
-                              rating={elem[rating]}
-                              ratedRating={ratedRating}
+                              name={elem.original_title}
+                              date={elem.release_date}
+                              genres={elem.genre_ids}
+                              description={elem.overview}
+                              rating={elem.vote_average}
+                              ratedRating={elem.rating}
                             />
                         </li>
                     )

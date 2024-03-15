@@ -57,12 +57,14 @@ export default class App extends React.Component {
     handlePageChange = (page) => {
         this.setState({
             currentPage: page,
-        });
+        })
         this.searchFilms(this.state.searchTerm)
     }
 
     render() {
-        const { film, loading, currentPage, totalPages, searchTerm, genresObj, guestSessionId } = this.state
+        const { film, loading,
+            currentPage, totalPages, searchTerm,
+            genresObj, guestSessionId } = this.state
         return (
             <GenreServiceProvider value={genresObj}>
             <>

@@ -2,6 +2,7 @@ import React from 'react';
 import { Tabs } from 'antd';
 
 import './header-tabs.css'
+import { GetRating } from '../../services/rating-service';
 import MainContainer from '../main-container';
 
 export default class HeaderTabs extends React.Component {
@@ -11,37 +12,52 @@ export default class HeaderTabs extends React.Component {
         totalRatedPages: 0,
     }
 
-    componentDidMount() {
-        this.loadRatedFilms();
-    }
-
-    loadRatedFilms = () => {
-        const ratedFilms = [];
-        for (let i = 0; i < localStorage.length; i++) {
-            const key = localStorage.key(i);
-            if (key.startsWith('film-')) {
-                const filmData = JSON.parse(localStorage.getItem(key));
-                ratedFilms.push(filmData);
-            }
-        }
-        const totalRatedPages = Math.ceil(ratedFilms.length / 20)
-        this.setState({ ratedFilms, totalRatedPages })
-    }
-
     onChangeTabs = (key) => {
         if (key === '2') {
-            this.loadRatedFilms()
-        } else {
-            this.setState({ ratedFilms: [], currentPageRated: 1 })
+            GetRating(this.props.guestSessionId, this.state.currentPageRated)
+                .then((res) => {
+                    if (res.success === false) {
+                        throw new Error('Server returned false')
+                    }
+                    this.setState({
+                        ratedFilms: res.results,
+                        totalRatedPages: res.total_pages,
+                    })
+                })
+                .catch((error) => {
+                    console.error(error);
+                })
+        } else if (key === '1') {
+            GetRating(this.props.guestSessionId, this.state.currentPageRated)
+                .then((res) => {
+                    if (res.success === false) {
+                        throw new Error('Server returned false')
+                    }
+                    this.setState({
+                        ratedFilms: res.results,
+                        totalRatedPages: res.total_pages,
+                    })
+                })
+                .catch((error) => {
+                    console.error(error);
+                })
         }
     }
 
     handlePageChangeRated = (page) => {
-        this.setState({ currentPageRated: page });
+        this.setState({ currentPageRated: page })
+        GetRating(this.props.guestSessionId, page).then((res) => {
+            this.setState({
+                ratedFilms: res.results,
+                totalRatedPages: res.total_pages,
+            })
+        })
     }
 
     render() {
-        const { guestSessionId, film, loading, currentPage, totalPages, searchTerm, searchFilms, handleSearch, handlePageChange } = this.props
+        const { guestSessionId, film, loading,
+            currentPage, totalPages, searchTerm,
+            searchFilms, handleSearch, handlePageChange } = this.props
         const optionsList = [
             {
                 key: '1',
@@ -50,6 +66,7 @@ export default class HeaderTabs extends React.Component {
                     <MainContainer
                       tabKey="1"
                       guestSessionId={guestSessionId}
+                      ratedFilms={this.state.ratedFilms}
                       film={film}
                       loading={loading}
                       currentPage={currentPage}
@@ -68,7 +85,8 @@ export default class HeaderTabs extends React.Component {
                     <MainContainer
                       tabKey="2"
                       guestSessionId={guestSessionId}
-                      film={this.state.ratedFilms.slice((this.state.currentPageRated - 1) * 20, this.state.currentPageRated * 20)}
+                      ratedFilms={this.state.ratedFilms}
+                      film={film}
                       loading={loading}
                       currentPage={this.state.currentPageRated}
                       totalPages={this.state.totalRatedPages}
